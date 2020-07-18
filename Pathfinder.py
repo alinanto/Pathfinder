@@ -51,7 +51,6 @@ def setup():
     while start_coords == end_coords:
         end_coords = (np.random.randint(0, NUMBER_OF_ROWS), np.random.randint(0, NUMBER_OF_COLUMNS))
 
-    screen.fill(BLACK)
     pygame.display.set_caption("Pathfinder")
 
     initialize_matrix()
@@ -223,7 +222,6 @@ while running:
                 row = position[1] // 10
                 if end_coords != (row,col) :
                     start_coords = (row,col)
-                    screen.fill(BLACK)
                     initialize_matrix()
                     draw_grid()
             if event.key == K_e:
@@ -232,9 +230,8 @@ while running:
                 row = position[1] // 10
                 if start_coords != (row,col) :
                     end_coords = (row,col)
-                    screen.fill(BLACK)
                     initialize_matrix()
-                    draw_grid()               
+                    draw_grid()
             if event.key == K_BACKSPACE:
                 setup()
 
