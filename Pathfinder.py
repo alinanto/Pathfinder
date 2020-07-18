@@ -5,6 +5,8 @@ import pygame
 from pygame.locals import (
     K_BACKSPACE,
     K_RETURN,
+    K_e,
+    K_s,
     KEYDOWN,
     MOUSEBUTTONUP,
     MOUSEBUTTONDOWN,
@@ -42,6 +44,13 @@ GREEN = (0, 255, 0)
 
 
 def setup():
+    global start_coords, end_coords
+    start_coords = (np.random.randint(0, NUMBER_OF_ROWS), np.random.randint(0, NUMBER_OF_COLUMNS))
+    end_coords = (np.random.randint(0, NUMBER_OF_ROWS), np.random.randint(0, NUMBER_OF_COLUMNS))
+   
+    while start_coords == end_coords:
+        end_coords = (np.random.randint(0, NUMBER_OF_ROWS), np.random.randint(0, NUMBER_OF_COLUMNS))
+        
     screen.fill(BLACK)
     pygame.display.set_caption("Pathfinder")
 
@@ -57,6 +66,7 @@ def initialize_matrix():
 
 def draw_grid():
     global start_coords, end_coords
+    screen.fill(BLACK)
 
     MARGIN = 1
     DIMENSION = (WINDOW_WIDTH - MARGIN * NUMBER_OF_COLUMNS) // NUMBER_OF_COLUMNS
@@ -67,12 +77,7 @@ def draw_grid():
             pygame.draw.rect(screen, WHITE, rect)
             matrix[x][y] = Cell(rect.copy(), False, np.inf, (x, y))
     
-    start_coords = (np.random.randint(0, NUMBER_OF_ROWS), np.random.randint(0, NUMBER_OF_COLUMNS))
-    end_coords = (np.random.randint(0, NUMBER_OF_ROWS), np.random.randint(0, NUMBER_OF_COLUMNS))
     
-    while start_coords == end_coords:
-        end_coords = (np.random.randint(0, NUMBER_OF_ROWS), np.random.randint(0, NUMBER_OF_COLUMNS))
-
     start_cell = matrix[start_coords[0]][start_coords[1]]
     end_cell = matrix[end_coords[0]][end_coords[1]]
 
@@ -186,9 +191,10 @@ def find_path():
 
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 matrix = None
+
 start_coords = None
 end_coords = None
-
+   
 setup()
 
 pygame.init()
@@ -213,6 +219,22 @@ while running:
         if event.type == KEYDOWN:
             if event.key == K_RETURN:
                 find_path()
+            if event.key == K_s:
+                position = pygame.mouse.get_pos()
+                col = position[0] // 10
+                row = position[1] // 10
+                start_coords = (row,col)
+                initialize_matrix()
+                draw_grid()
+            if event.key == K_e:
+                position = pygame.mouse.get_pos()
+                col = position[0] // 10
+                row = position[1] // 10
+                end_coords = (row,col)
+                initialize_matrix()
+                draw_grid()               
+
+                
             if event.key == K_BACKSPACE:
                 setup()
        
