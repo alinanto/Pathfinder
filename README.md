@@ -11,4 +11,4 @@ This is my first experiment with pygame, I made a pathfinding viewer that use Di
 
 
 ## How it looks:
-![Image of how it looks](https://i.imgur.com/OiGjh21.png)
+![Demo image](https://github.com/alinanto/Pathfinder/blob/master/image.PNG)
